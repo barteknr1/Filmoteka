@@ -1,7 +1,5 @@
-
-
 const toggleModal = (() => {
-  const refs = {      
+  const refs = {
     closeModalBtn: document.querySelector('[data-modal-close]'),
     modal: document.querySelector('[data-modal]'),
   };
@@ -26,21 +24,21 @@ const toggleModal = (() => {
         closeModal();
       }
     });
-  }
+  };
 
   const closeOnBackdrop = () => {
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('backdrop')) {
         closeModal();
         document.removeEventListener('click', closeOnBackdrop);
-      }
-    })
+      };
+    });
   };
 
   return {
     openModal,
     closeModal,
-    closeOnBackdrop
+    closeOnBackdrop,
   };
 })();
 

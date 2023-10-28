@@ -18,16 +18,15 @@ const getSelectedMovieDetails = async id => {
 const renderSelectedMovieDetails = movie => {
   const imgUrl = 'https://image.tmdb.org/t/p/w500';
   const backdrop = document.querySelector('.backdrop');
-    backdrop.style.backgroundImage = `url('${imgUrl}${movie.backdrop_path}')`;
-  const selectedMovie = `<img class="modal__img" src="${movie.poster_path ? imgUrl+movie.poster_path :defaultFilmCardImage }"></img>
+  backdrop.style.backgroundImage = `url('${imgUrl}${movie.backdrop_path}')`;
+  const selectedMovie = `<img class="modal__img" src="${movie.poster_path ? imgUrl + movie.poster_path : defaultFilmCardImage}"></img>
         <div class="modal__wrapper">
             <h2 class="modal__title uppercase"> ${movie.title}</h2>
                 <ul class="modal__info">
                     <li class="modal__info-item">
                         <p class="modal__info-key">Vote / Votes</p>
-                        <p class="modal__info-number"><p class="rating-frame">${movie.vote_average.toFixed(
-                          1,
-                        )}</p>&nbsp/&nbsp<p class="rating-frame--gray">${movie.vote_count}</p></p>
+                        <p class="modal__info-number"><p class="rating-frame">${movie.vote_average.toFixed(1)}</p>&nbsp/&nbsp
+                        <p class="rating-frame--gray">${movie.vote_count}</p></p>
                     </li>
                     <li class="modal__info-item">
                         <p class="modal__info-key">Popularity</p>
@@ -40,9 +39,9 @@ const renderSelectedMovieDetails = movie => {
                     <li class="modal__info-item">
                        <p class="modal__info-key">Genre</p>
                        <p class="modal__info-value">${movie.genres
-                         .map(genre => genre.name)
-                         .slice(0, 3)
-                         .join(', ')}</p>
+      .map(genre => genre.name)
+      .slice(0, 3)
+      .join(', ')}</p>
                    </li>
                 </ul>
             <div class="modal__overview">
@@ -74,53 +73,44 @@ const renderSelectedMovieDetails = movie => {
   const isDuplicateWatched = currentWatched.some(movie => movieToAdd.id === movie.id);
 
   btnAddToQueue.addEventListener('click', () => {
-   
     if (!isDuplicate) {
-        currentQueue.push(movie);
-        localStorage.setItem('queue-movie', JSON.stringify(currentQueue));
-        Notiflix.Notify.info(`"${movie.title}"  sucesfully added to queue`);
-        
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-        setTimeout(() => {
+      currentQueue.push(movie);
+      localStorage.setItem('queue-movie', JSON.stringify(currentQueue));
+      Notiflix.Notify.info(`"${movie.title}"  sucesfully added to queue`);
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      setTimeout(() => {
         btnAddToQueue.classList.add('d-none');
         btnRemoveFromQueue.classList.remove('d-none');
-        
-        }, 1100); 
-        
-      } 
+      }, 1100);
+    }
   });
-
   
   btnAddToWatched.addEventListener('click', () => {
-    
     if (!isDuplicateWatched) {
-        currentWatched.push(movie);
-        localStorage.setItem('watched-movie', JSON.stringify(currentWatched));
-        Notiflix.Notify.info(`"${movie.title}"  sucesfully added to watched`);
+      currentWatched.push(movie);
+      localStorage.setItem('watched-movie', JSON.stringify(currentWatched));
+      Notiflix.Notify.info(`"${movie.title}" Successfully added to watched`);
         
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-        setTimeout(() => {
-          btnAddToWatched.classList.add('d-none');
-          btnRemoveFromWatched.classList.remove('d-none');
-        }, 1100)
-        
-      } 
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      setTimeout(() => {
+        btnAddToWatched.classList.add('d-none');
+        btnRemoveFromWatched.classList.remove('d-none');
+      }, 1100)
+    };
   });
 
-  if(isDuplicate) {
-
+  if (isDuplicate) {
     btnAddToQueue.classList.add('d-none');
-    btnRemoveFromQueue.classList.remove('d-none');  
-
+    btnRemoveFromQueue.classList.remove('d-none');
     btnRemoveFromQueue.addEventListener('click', () => {
       const index = currentQueue.findIndex(movie => movie.id === movieToAdd.id);
       currentQueue.splice(index, 1);
       localStorage.setItem('queue-movie', JSON.stringify(currentQueue));
-      Notiflix.Notify.info(`"${movie.title}"  sucesfully removed from queue`);
+      Notiflix.Notify.info(`"${movie.title}" Successfully removed from queue`);
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -128,16 +118,12 @@ const renderSelectedMovieDetails = movie => {
         btnRemoveFromQueue.classList.add('d-none');
         btnAddToQueue.classList.remove('d-none');
       }, 1100)
-       
     });
- 
-  }
+  };
 
   if (isDuplicateWatched) {
-
     btnAddToWatched.classList.add('d-none');
     btnRemoveFromWatched.classList.remove('d-none');
-
     btnRemoveFromWatched.addEventListener('click', () => {
       const index = currentWatched.findIndex(movie => movie.id === movieToAdd.id);
       currentWatched.splice(index, 1);
@@ -150,11 +136,8 @@ const renderSelectedMovieDetails = movie => {
         btnRemoveFromWatched.classList.add('d-none');
         btnAddToWatched.classList.remove('d-none');
       }, 1100)
-      
     });
-
-  }
-  
+  };
 };
 
 const selectedMovie = { getSelectedMovieDetails, renderSelectedMovieDetails };

@@ -64,7 +64,6 @@ const Loader = {
     return this;
   },
 };
-/* Loader */
 
 if (typeof module !== "undefined") {
   module.exports = Loader;

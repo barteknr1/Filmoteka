@@ -1,11 +1,8 @@
-import getAllGenres from './genres';
 import selectedMovie from './modal';
 import toggleModal from './toggleModal';
 import defaultFilmCardImage from '../images/no-image.png'
 
-
 const trendingMoviesDOM = document.querySelector('.movie-list');
-
 
 const getTrendingMovies = async (page = 1) => {
   const APIkey = 'ac3e035161883f7175e5be9954a0068d';
@@ -39,10 +36,9 @@ const renderTrendingMovies = response => {
         }
         return genresArray;
       });
-      return `
-        <li data-id=${id}>
+      return `<li data-id=${id}>
         <div class="movie-card card-hover">
-            <img class="movie-card__img" src="${poster_path ? imgUrl+poster_path :defaultFilmCardImage }" loading="lazy" 
+            <img class="movie-card__img" src="${poster_path ? imgUrl + poster_path : defaultFilmCardImage}" loading="lazy" 
             />
             <div class="movie-card__desc">
             <p class="movie-card__title">${title}</p>
@@ -51,30 +47,25 @@ const renderTrendingMovies = response => {
           .join(', ')} | ${releaseYear}</p>                     
             </div>
         </div>
-        </li>
-        `;
+        </li>`;
     })
     .join('');
     
-    if(trendingMoviesDOM){
-      trendingMoviesDOM.innerHTML = markup;
-    }
-  
+  if (trendingMoviesDOM) {
+    trendingMoviesDOM.innerHTML = markup;
+  };
+
   const movieList = document.querySelectorAll('li');
   movieList.forEach(movieListItem => {
-
-
     movieListItem.addEventListener('click', () => {
       const movieId = movieListItem.dataset.id;
       localStorage.setItem('movie-id', movieId);
       setTimeout(() => toggleModal.openModal(), 50);
-
-        
       selectedMovie.getSelectedMovieDetails(movieId)
         .then((movie) => selectedMovie.renderSelectedMovieDetails(movie))
         .catch((error) => console.log(error))
-    })
-  })
+    });
+  });
 };
    
    
